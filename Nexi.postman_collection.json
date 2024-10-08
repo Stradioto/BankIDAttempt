@@ -1,0 +1,468 @@
+{
+	"info": {
+		"_postman_id": "d98d2505-dee5-4935-bdd3-8426a641ce6a",
+		"name": "Nexi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14554776"
+	},
+	"item": [
+		{
+			"name": "createPayment",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "9256383b1c104b12b210e4b5ecb28e33",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"order\": {\r\n    \"items\": [\r\n      {\r\n        \"reference\": \"item_ref_1\",\r\n        \"name\": \"Item Name\",\r\n        \"quantity\": 1,\r\n        \"unit\": \"pcs\",\r\n        \"unitPrice\": 1000,\r\n        \"taxRate\": 20,\r\n        \"taxAmount\": 200,\r\n        \"grossTotalAmount\": 1200,\r\n        \"netTotalAmount\": 1000\r\n      }\r\n    ],\r\n    \"amount\": 1200,\r\n    \"currency\": \"EUR\",\r\n    \"reference\": \"order_ref_1\"\r\n  },\r\n  \"checkout\": {\r\n    \"integrationType\": \"HostedPaymentPage\",\r\n    \"returnUrl\": \"http://example.com/return\",\r\n    \"cancelUrl\": \"http://example.com/cancel\",\r\n    \"consumer\": {\r\n      \"email\": \"consumer@example.com\"\r\n    },\r\n    \"termsUrl\": \"http://example.com/terms\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/createpayment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"createpayment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "requestCancelPayment",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "9256383b1c104b12b210e4b5ecb28e33",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 1200,\r\n    \"orderItems\": [\r\n        {\r\n            \"reference\": \"item123\",\r\n            \"name\": \"Sample Product\",\r\n            \"quantity\": 1.0,\r\n            \"unit\": \"pcs\",\r\n            \"unitPrice\": 1000,\r\n            \"taxRate\": 2500,\r\n            \"taxAmount\": 250,\r\n            \"grossTotalAmount\": 1200,\r\n            \"netTotalAmount\": 1000,\r\n            \"imageUrl\": \"http://example.com/image.jpg\"\r\n        }\r\n    ]\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/payments/{paymentId}/cancels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"payments",
+						"{paymentId}",
+						"cancels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refundPaymentRequest",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "9256383b1c104b12b210e4b5ecb28e33",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 1200,  // This should equal the original charged amount\r\n    \"orderItems\": [\r\n        {\r\n            \"reference\": \"item_ref_1\",  // Match the original item's reference\r\n            \"name\": \"Item Name\",  // Match the original item's name\r\n            \"quantity\": 1,  // Match the original order's quantity\r\n            \"unit\": \"pcs\",\r\n            \"unitPrice\": 1000,  // Match the original item's unit price\r\n            \"taxRate\": 20,  // Match the original item's tax rate\r\n            \"taxAmount\": 200,  // Match the original item's tax amount\r\n            \"grossTotalAmount\": 1200,  // This should equal the total amount being refunded\r\n            \"netTotalAmount\": 1000,  // Match the original item's net total amount\r\n            \"imageUrl\": \"http://example.com/image.jpg\"  // Optional reference\r\n        }\r\n    ],\r\n    \"myReference\": \"my_reference_1\"  // Optional tracking reference\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/payments/c2c1902f58e94b2288eda6db41069716/refunds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"payments",
+						"c2c1902f58e94b2288eda6db41069716",
+						"refunds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPayment",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "9256383b1c104b12b210e4b5ecb28e33",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/payments/{paymentId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"payments",
+						"{paymentId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "terminatePayment",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/payments/{paymentId}/terminate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"payments",
+						"{paymentId}",
+						"terminate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateOrder",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 22500,\r\n  \"items\": [\r\n    {\r\n      \"reference\": \"item1\",\r\n      \"name\": \"Product 1\",\r\n      \"quantity\": 2,\r\n      \"unit\": \"pcs\",\r\n      \"unitPrice\": 5000,\r\n      \"taxRate\": 2500,\r\n      \"taxAmount\": 2500,\r\n      \"grossTotalAmount\": 12500,\r\n      \"netTotalAmount\": 10000\r\n    },\r\n    {\r\n      \"reference\": \"item2\",\r\n      \"name\": \"Product 2\",\r\n      \"quantity\": 1,\r\n      \"unit\": \"pcs\",\r\n      \"unitPrice\": 8000,\r\n      \"taxRate\": 2000,\r\n      \"taxAmount\": 2000,\r\n      \"grossTotalAmount\": 10000,\r\n      \"netTotalAmount\": 8000\r\n    }\r\n  ],\r\n  \"shipping\": {\r\n    \"costSpecified\": true\r\n  },\r\n  \"paymentMethods\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/payments/{paymentId}/updateorder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"payments",
+						"{paymentId}",
+						"updateorder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateMyReference",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"myReference\": \"new_reference_value\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/payments/{paymentId}/myreference",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"payments",
+						"{paymentId}",
+						"myreference"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatReferenceInformation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"reference\": \"new_reference_value\",\r\n  \"checkoutUrl\": \"https://example.com/checkout\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/payments/{paymentId}/referenceinformation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"payments",
+						"{paymentId}",
+						"referenceinformation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRefund",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "9256383b1c104b12b210e4b5ecb28e33",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/refunds/{refundId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"refunds",
+						"{refundId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancelPendingRefund",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "9256383b1c104b12b210e4b5ecb28e33",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/refunds/{refundId}/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"refunds",
+						"{refundId}",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCharge",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "9256383b1c104b12b210e4b5ecb28e33",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/charges/{chargeId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"charges",
+						"{chargeId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chargePayment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 1200,\r\n  \"orderItems\": [\r\n    {\r\n      \"reference\": \"item_ref_1\",\r\n      \"name\": \"Item Name\",\r\n      \"quantity\": 1,\r\n      \"unit\": \"pcs\",\r\n      \"unitPrice\": 1000,\r\n      \"taxRate\": 20,\r\n      \"taxAmount\": 200,\r\n      \"grossTotalAmount\": 1200,\r\n      \"netTotalAmount\": 1000\r\n    }\r\n  ],\r\n  \"shipping\": {\r\n    \"trackingNumber\": \"TRACK12345\",\r\n    \"provider\": \"DHL\"   // This should be 4 characters or less\r\n  },\r\n  \"finalCharge\": true,\r\n  \"myReference\": \"charge_ref_1\",\r\n  \"paymentMethodReference\": \"method_ref_1\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/payments/96b6d7386f5440198ff878a073d984fd/charges",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"payments",
+						"96b6d7386f5440198ff878a073d984fd",
+						"charges"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refundCharge",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 1200,\r\n  \"orderItems\": [\r\n    {\r\n      \"reference\": \"item_ref_1\",\r\n      \"name\": \"Item Name\",\r\n      \"quantity\": 1,\r\n      \"unit\": \"pcs\",\r\n      \"unitPrice\": 1000,\r\n      \"taxRate\": 20,\r\n      \"taxAmount\": 200,\r\n      \"grossTotalAmount\": 1200,\r\n      \"netTotalAmount\": 1000,\r\n      \"imageUrl\": \"http://example.com/image.jpg\"\r\n    }\r\n  ],\r\n  \"myReference\": \"refund_ref_1\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/charges/{chargeId}/refunds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"charges",
+						"{chargeId}",
+						"refunds"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
