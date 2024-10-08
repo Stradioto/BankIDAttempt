@@ -1,13 +1,19 @@
 # BankID and Nexi Payments Integration API
 BankID API and Nexi Payments in Java
 
-(Some advices: Not optimized for Production environment
 
-Test were made thought Springboot OpenAPI and Postman.
 
-Java truststore in use was downloaded from Bank Demo git page https://github.com/BankID/SampleCode/tree/main/server/certificates/test
 
-The Nexi certificates were downloaded direct from the test website https://test.api.dibspayment.eu/
+(Some advices: 
+1) Not optimized for Production environment
+
+2) Test were made thought Springboot OpenAPI and Postman. In the files you can find the postman set-up for tests (.json)
+
+3) Java truststore in use was downloaded from Bank Demo git page https://github.com/BankID/SampleCode/tree/main/server/certificates/test
+
+4) The Nexi certificates were downloaded direct from the test website https://test.api.dibspayment.eu/
+
+
 )
 
 This project integrates BankID for user authentication and Nexi Payments for payment processing in a Java Spring Boot API. The API enables secure identity verification through BankID and facilitates transactions using Nexi's payment gateway.
